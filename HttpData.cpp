@@ -634,7 +634,10 @@ AnalysisState HttpData::analysisRequest()
         // echo test
         if (fileName_ == "hello")
         {
-            outBuffer_ = "HTTP/1.1 200 OK\r\nContent-type: text/plain\r\n\r\nHello World";
+            string hello_;
+            hello_ +="#Good night#";
+            outBuffer_ = "HTTP/1.1 200 OK\r\nContent-type: text/plain\r\nContent-Length: " + to_string(hello_.length()) + "\r\n\r\n";
+            outBuffer_ += hello_; 
             return ANALYSIS_SUCCESS;
         }
         if (fileName_ == "favicon.ico")
