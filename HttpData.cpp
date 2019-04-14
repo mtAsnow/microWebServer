@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <iostream>
+#include <algorithm>
 #include <string.h>
 using namespace std;
 
@@ -623,8 +624,12 @@ AnalysisState HttpData::analysisRequest()
             keepAlive_ = true;
             header += string("Connection: Keep-Alive\r\n") + "Keep-Alive: timeout=" + to_string(DEFAULT_KEEP_ALIVE_TIME) + "\r\n";
         }
-        int dot_pos = fileName_.find('.');
+        reverse(fileName_.begin(),fileName_.end());
+        int redot_pos = fileName_.find('.');
+        int dot_pos = fileName_.length() - redot_pos - 1;
+
         string filetype;
+        reverse(fileName_.begin(),fileName_.end());
         if (dot_pos < 0) 
             filetype = MimeType::getMime("default");
         else
